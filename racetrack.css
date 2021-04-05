@@ -3,6 +3,7 @@ html, body {
 }
 table {
 border-collapse: collapse;
+
 }
 tr {
   border: 1px solid #999;
@@ -10,7 +11,8 @@ tr {
 td {
  vertical-align: middle;
  text-align: center;
- width: 2vw;
+ 
+
 }
 .inner {
   display: inline-block;
@@ -43,4 +45,36 @@ td {
 .row_header {
   padding: 5px;
 }
+.header_header {
+  padding: 5px;
+}
 
+.table {
+ display: table;
+ margin: 5px;
+ font-family: calibri;
+ font-size: 12px;
+}
+.row {
+ display: table-row-group;
+}
+.cell {
+ display: table-cell;
+ padding: 5px;
+ width: 3vw;
+ height: 3vh;
+ border-bottom: 1px solid #999;
+ border-right: 1px solid #999;
+ vertical-align: middle;
+ text-align: center;
+ background-color: white;
+}
+.row:nth-child(1) .cell {
+ border-top: 1px solid #999;
+}
+.cell:nth-child(1) {
+ border-left: 1px solid #999;
+}
+.inner {
+  display: inline-block;
+}

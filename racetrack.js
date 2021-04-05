@@ -55,7 +55,14 @@ function createTable(arr, row_key, col_key, val_key, n_row_headers, n_col_header
       cell.classList.add('row_' + y_row);  // SO ROWS START AT 1
       cell.id = 'r' + y_row + 'c' + x_col;
       cell.classList.add('header_header');
-      cell.appendChild(createInner('x'));
+      
+      if (y === 0) {
+       cell.appendChild(createInner('MONTH'));
+      }
+      if (y === 1) {
+       cell.appendChild(createInner('WEEK'));
+      }
+      cell.style.textAlign = 'right';
     }
     
     // NOW MAKE THE ACTUAL COLUMN HEADERS
@@ -64,6 +71,7 @@ function createTable(arr, row_key, col_key, val_key, n_row_headers, n_col_header
     if (y === 0) {
      let obj = getUniqueAndCount(arr,"month_abs", "day_abs")
      //console.log(obj);
+     monthArr = [];
     for (let x = 0; x < Object.keys(obj).length; x++) {
       let w = obj[Object.keys(obj)[x]].length;
       //console.log(w);
@@ -84,6 +92,7 @@ function createTable(arr, row_key, col_key, val_key, n_row_headers, n_col_header
     
     if (y === 1) {
      let obj = getUniqueAndCount(arr,"week_abs", "day_abs")
+     weekArr = [];
      for (let x = 0; x < Object.keys(obj).length; x++) {
       let w = obj[Object.keys(obj)[x]].length;
       weekArr.push(w);
@@ -242,7 +251,7 @@ function getUniqueAndCount(arr, key, key2) {
 }
 
 
-function addMonthLines() {
+function addMonthLines(color) {
   
   let rows = document.getElementsByTagName('tr');
   //console.log(rows);
@@ -250,7 +259,7 @@ function addMonthLines() {
      let count = 1;    
     for (let x = 0; x < monthArr.length-1; x++) {
       count += monthArr[x];
-      rows[i].children[count].style.borderLeft = '1px solid #999';
+      rows[i].children[count].style.borderLeft = '1px solid ' + color;
       
     }
     
@@ -272,7 +281,7 @@ function removeMonthLines() {
   }
   
 }
-function addWeekLines() {
+function addWeekLines(color) {
   
   let rows = document.getElementsByTagName('tr');
   //console.log(rows);
@@ -280,7 +289,7 @@ function addWeekLines() {
      let count = 1;    
     for (let x = 0; x < weekArr.length-1; x++) {
       count += weekArr[x];
-      rows[i].children[count].style.borderLeft = '1px solid #999';
+      rows[i].children[count].style.borderLeft = '1px solid ' + color;
       
     }
     
@@ -296,7 +305,7 @@ function removeWeekLines() {
     for (let x = 0; x < weekArr.length-1; x++) {
       count += weekArr[x];
       rows[i].children[count].style.borderLeft = 'none';
-      
+
     }
     
   }
