@@ -1,0 +1,34 @@
+<html>
+
+<head>
+ <link rel="stylesheet" type="text/css" href="racetrack.css">
+
+</head>
+
+
+  <div style='display: table; height: 100%; width: 100%;'>
+   <div style='display: table-cell; vertical-align: middle;'>
+    <h2 id='page-header' class='noselect'> a racetrack </h2>
+    <div id='main' style='margin: 0 auto;'></div>
+   </div>
+  </div>
+
+
+<script src='racetrack.js'></script>
+
+<script>
+
+let data = fetch('racetrack.json?x=' + Math.random()).then(r => r.json()).then(arr => {
+
+ //console.log(arr);
+ 
+ let racetrack = createTable(arr, "activity_no", "day_abs", "cycle_no", 1, 2);
+ let main = document.getElementById('main');
+ main.appendChild(racetrack.table);
+
+})
+
+
+
+</script>
+</html>
