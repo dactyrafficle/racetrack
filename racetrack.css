@@ -1,38 +1,22 @@
-.table {
- display: table;
- font-family: calibri;
- font-size: 12px;
+html, body {
+  font-family: calibri;
 }
-.row {
- display: table-row-group;
+table {
+border-collapse: collapse;
 }
-.cell {
- display: table-cell;
- border-bottom: 1px solid #999;
- /* border-right: 1px solid #999; */
+tr {
+  border: 1px solid #999;
+}
+td {
  vertical-align: middle;
  text-align: center;
- background-color: white;
- width: 0.4vw;
- height: 1.4vw;
-}
-.row:nth-child(1) .cell {
- border-top: 1px solid #999;
-}
-.cell:nth-child(1) {
- border-left: 1px solid #999;
-}
-.cell:nth-child(2) {
- border-left: 1px solid #999;
-}
-.cell:last-child {
- border-right: 1px solid #999;
+ width: 2vw;
 }
 .inner {
   display: inline-block;
 }
+
 #page-header {
- font-family: calibri;
  text-align: center;
 }
 

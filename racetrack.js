@@ -4,8 +4,8 @@ function createTable(arr, row_key, col_key, val_key, n_row_headers, n_col_header
  let data = {}; // A TEMPORARY OBJECT
  let cells = {};
 
- let table = document.createElement('div');
- table.classList.add('table');
+ let table = document.createElement('table');
+ //table.classList.add('table');
 
  // ESTABLISH DIMENSIONS OF TABLE AND CREATE AN OBJECT OF NAMED OBJECTS
  let m_max = 1;
@@ -40,30 +40,76 @@ function createTable(arr, row_key, col_key, val_key, n_row_headers, n_col_header
    if (n_col_headers > 0) {
    
     for (let y = 0; y < n_col_headers; y++) {
-    
-     let row = createRow();
-     table.appendChild(row);
-     y_row++;
-     let x_col = 0;
+      let row = createRow();
+      table.appendChild(row);
+      y_row++;
+      let x_col = 0;
 
-     for (let x = n_min - n_row_headers; x <= n_max; x++) {
-
+    for (let x = 0; x < n_row_headers; x++) {
       let cell = createCell();
       row.appendChild(cell);
       x_col++;
       cell.classList.add('row_' + y_row);  // SO ROWS START AT 1
       cell.id = 'r' + y_row + 'c' + x_col;
+      cell.classList.add('header_header');
+      cell.appendChild(createInner('x'));
+    }
+    
+    // NOW MAKE THE ACTUAL COLUMN HEADERS
+   
+
+    if (y === 0) {
+     let obj = getUniqueAndCount(arr,"month_abs", "day_abs")
+    for (let x = 0; x < Object.keys(obj).length; x++) {
+      let w = obj[Object.keys(obj)[x]].length;
+      console.log(w);
+      let month_abs = Object.keys(obj)[x];
+      let month_no = (month_abs-1) % 12 + 1;
+      let cell = createCell();
+      row.appendChild(cell);
+      cell.colSpan = w;
+      x_col++;
+      cell.classList.add('row_' + y_row);  // SO ROWS START AT 1
+      cell.id = 'r' + y_row + 'c' + x_col;
+      cell.style.border = '1px solid #999';
+      cell.appendChild(createInner(month_no));
+    }
+
+    }
+    
+    if (y === 1) {
+     let obj = getUniqueAndCount(arr,"week_abs", "day_abs")
+     for (let x = 0; x < Object.keys(obj).length; x++) {
+      let w = obj[Object.keys(obj)[x]].length;
       
-      
-      if (x >= n_min) {
-        cell.classList.add('col_header');
-        cell.appendChild(createInner(null)); // no value
-      } else {
-       cell.classList.add('header_header');
-       cell.appendChild(createInner('x'));
-      }
-  
+      console.log(w);
+      let month_abs = Object.keys(obj)[x];
+      let month_no = (month_abs-1) % 52 + 1;
+      let cell = createCell();
+      row.appendChild(cell);
+      cell.colSpan = w;
+      x_col++;
+      cell.classList.add('row_' + y_row);  // SO ROWS START AT 1
+      cell.id = 'r' + y_row + 'c' + x_col;
+      cell.style.border = '1px solid #999';
+      cell.appendChild(createInner(month_no));
      }
+
+    }
+    /*
+     loop over arr
+     count how many unique things there are with arr[i][key] either month or week_abs etc.
+     then make an object to store the results
+     then loop over the results, making a td for each one, with colspan equivalent to the count
+     
+    
+    
+    
+    */
+     
+
+     
+     
     }
    } 
    
@@ -86,6 +132,7 @@ let x_col = 0;
       cell.id = 'r' + y_row + 'c' + x_col;
       cell.classList.add('row_header');
       cell.style.textAlign = 'left';
+      cell.style.border = '1px solid #999';
      cell.appendChild(createInner(activities[y].desc)); // CREATE AND APPEND INNER
     }
 
@@ -140,13 +187,13 @@ let activities = {
 }
 
 function createRow() {
-  let row = document.createElement('div');
-  row.classList.add('row');
+  let row = document.createElement('tr');
+  //row.classList.add('row');
   return row;
 }
 function createCell() {
-  let cell = document.createElement('div');
-  cell.classList.add('cell');
+  let cell = document.createElement('td');
+  //cell.classList.add('cell');
   return cell;
 }
 function createInner(x) {
@@ -154,4 +201,26 @@ function createInner(x) {
   inner.classList.add('inner');
   inner.innerHTML = x;
   return inner;
+}
+
+function getUniqueAndCount(arr, key, key2) {
+  let obj = {}
+  for (let i = 0; i < arr.length; i++) {
+    
+    if (obj[arr[i][key]]) {
+      // test if we have the value
+      
+      if (obj[arr[i][key]].indexOf(arr[i][key2]) === -1) {
+        obj[arr[i][key]].push(arr[i][key2]);
+      }
+      
+    } else {
+      obj[arr[i][key]] = [];
+      obj[arr[i][key]].push(arr[i][key2]);
+    }
+    
+
+    
+  }
+  return obj;
 }
