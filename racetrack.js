@@ -1,4 +1,7 @@
 
+let monthArr = [];
+let weekArr = [];
+
 function createTable(arr, row_key, col_key, val_key, n_row_headers, n_col_headers) {
 
  let data = {}; // A TEMPORARY OBJECT
@@ -60,9 +63,11 @@ function createTable(arr, row_key, col_key, val_key, n_row_headers, n_col_header
 
     if (y === 0) {
      let obj = getUniqueAndCount(arr,"month_abs", "day_abs")
+     //console.log(obj);
     for (let x = 0; x < Object.keys(obj).length; x++) {
       let w = obj[Object.keys(obj)[x]].length;
-      console.log(w);
+      //console.log(w);
+      monthArr.push(w);
       let month_abs = Object.keys(obj)[x];
       let month_no = (month_abs-1) % 12 + 1;
       let cell = createCell();
@@ -81,8 +86,8 @@ function createTable(arr, row_key, col_key, val_key, n_row_headers, n_col_header
      let obj = getUniqueAndCount(arr,"week_abs", "day_abs")
      for (let x = 0; x < Object.keys(obj).length; x++) {
       let w = obj[Object.keys(obj)[x]].length;
-      
-      console.log(w);
+      weekArr.push(w);
+      //console.log(w);
       let month_abs = Object.keys(obj)[x];
       let month_no = (month_abs-1) % 52 + 1;
       let cell = createCell();
@@ -92,10 +97,21 @@ function createTable(arr, row_key, col_key, val_key, n_row_headers, n_col_header
       cell.classList.add('row_' + y_row);  // SO ROWS START AT 1
       cell.id = 'r' + y_row + 'c' + x_col;
       cell.style.border = '1px solid #999';
+      cell.style.fontFamily = 'monospace';
+      
+      if (month_no < 10) {
+        month_no = '0' + month_no;
+      }
+      
       cell.appendChild(createInner(month_no));
      }
 
     }
+    
+    
+    
+    
+    
     /*
      loop over arr
      count how many unique things there are with arr[i][key] either month or week_abs etc.
@@ -223,4 +239,66 @@ function getUniqueAndCount(arr, key, key2) {
     
   }
   return obj;
+}
+
+
+function addMonthLines() {
+  
+  let rows = document.getElementsByTagName('tr');
+  //console.log(rows);
+  for (let i = 2; i < rows.length; i++) {
+     let count = 1;    
+    for (let x = 0; x < monthArr.length-1; x++) {
+      count += monthArr[x];
+      rows[i].children[count].style.borderLeft = '1px solid #999';
+      
+    }
+    
+  }
+  
+}
+function removeMonthLines() {
+  
+  let rows = document.getElementsByTagName('tr');
+  //console.log(rows);
+  for (let i = 2; i < rows.length; i++) {
+     let count = 1;    
+    for (let x = 0; x < monthArr.length-1; x++) {
+      count += monthArr[x];
+      rows[i].children[count].style.borderLeft = 'none';
+      
+    }
+    
+  }
+  
+}
+function addWeekLines() {
+  
+  let rows = document.getElementsByTagName('tr');
+  //console.log(rows);
+  for (let i = 2; i < rows.length; i++) {
+     let count = 1;    
+    for (let x = 0; x < weekArr.length-1; x++) {
+      count += weekArr[x];
+      rows[i].children[count].style.borderLeft = '1px solid #999';
+      
+    }
+    
+  }
+  
+}
+function removeWeekLines() {
+  
+  let rows = document.getElementsByTagName('tr');
+  //console.log(rows);
+  for (let i = 2; i < rows.length; i++) {
+     let count = 1;    
+    for (let x = 0; x < weekArr.length-1; x++) {
+      count += weekArr[x];
+      rows[i].children[count].style.borderLeft = 'none';
+      
+    }
+    
+  }
+  
 }
