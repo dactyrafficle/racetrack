@@ -78,3 +78,17 @@ td {
 .inner {
   display: inline-block;
 }
+
+#checkbox-table .row .cell {
+  width: auto;
+}
+
+.arrow-right {
+  display: inline-block;
+  margin-left: 0.5vh;
+  width: 0; 
+  height: 0; 
+  border-top: 0.5vh solid transparent;
+  border-bottom: 0.5vh solid transparent;
+  border-left: 0.5vh solid #999;
+}

@@ -8,6 +8,7 @@ function createTable(arr, row_key, col_key, val_key, n_row_headers, n_col_header
  let cells = {};
 
  let table = document.createElement('table');
+ table.id = 'racetrack';
  //table.classList.add('table');
 
  // ESTABLISH DIMENSIONS OF TABLE AND CREATE AN OBJECT OF NAMED OBJECTS
@@ -57,10 +58,10 @@ function createTable(arr, row_key, col_key, val_key, n_row_headers, n_col_header
       cell.classList.add('header_header');
       
       if (y === 0) {
-       cell.appendChild(createInner('MONTH'));
+       cell.appendChild(createInner('MONTH' + '<div class="arrow-right"></div>'));
       }
       if (y === 1) {
-       cell.appendChild(createInner('WEEK'));
+       cell.appendChild(createInner('WEEK' + '<div class="arrow-right"></div>'));
       }
       cell.style.textAlign = 'right';
     }

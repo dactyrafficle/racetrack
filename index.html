@@ -8,25 +8,47 @@
   <div class='noselect' id='hamburger' style='position: absolute; top: 2vh; left: 2vh; border: 2px solid transparent;'>
    <div class='noselect' id='pink_dot' style='border-radius: 50%; width: 20px; height: 20px; background-color: #fcf; cursor: pointer; display:inline-block; vertical-align: top; margin: 5px;'></div>
    <div class='noselect' id='lines-container' style='display: none; vertical-align: top;'>
-    <div class='table'>
+   
+    <div class='table' id='checkbox-table'>
+     <div class='row' >
+      <div class='cell' style='text-align:left;'>
+       <div class='inner'> time span  </div>
+      </div>
+      <div class='cell' style='text-align: left;'>
+       <div class='inner'> grid lines  </div>
+      </div>
+      <div class='cell' style='text-align: left;'>
+       <div class='inner'> header row order </div>
+      </div>
+     </div>
      <div class='row'>
-      <div class='cell'>
+      <div class='cell' style='text-align: left;'>
        <div class='inner'> by month  </div>
       </div>
       <div class='cell'>
        <input type='checkbox' id='by_month' />
       </div>
+      <div class='cell'>
+       <input type='checkbox' id='by_month_header' />
+      </div>
      </div>
       <div class='row'>
-        <div class='cell'>
+        <div class='cell' style='text-align: left;'>
           <div class='inner'> by week  </div>
         </div>
         <div class='cell'>
           <input type='checkbox' id='by_week' />
         </div>
+      <div class='cell'>
+       <input type='checkbox' id='by_week_header' checked />
+      </div>
       </div>
    </div>
+   
   </div>
+  </div>
+
+   </div>
   </div>
 
   <script>
@@ -72,12 +94,43 @@
        addMonthLines('#999');
       }
     });
-   }
-
-    
    
-  </script>
-
+   let by_month_header = document.getElementById('by_month_header');
+   let by_week_header = document.getElementById('by_week_header');
+   
+    by_month_header.addEventListener('click', function() {
+      swapHeaderRows();
+      if (this.checked) {
+        by_week_header.checked = false;
+      } else {
+        by_week_header.checked = true;
+      }
+      
+    });
+    by_week_header.addEventListener('click', function() {
+      swapHeaderRows();
+      if (this.checked) {
+        by_month_header.checked = false;
+      } else {
+        by_month_header.checked = true;
+      }
+      
+    });
+  
+   } // closing window.onload
+   
+   
+   function swapHeaderRows() {
+    let racetrack = document.getElementById('racetrack');
+    let header0 = racetrack.children[0];
+    let header1 = racetrack.children[1];
+    console.log(header0);
+    console.log(header1);
+    racetrack.insertBefore(header1, header0);
+   }
+   
+   
+ </script>
 
   <div style='display: table; height: 100%; width: 100%;'>
    <div style='display: table-cell; vertical-align: middle;'>
