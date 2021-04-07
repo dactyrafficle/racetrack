@@ -73,6 +73,7 @@ function createTable(arr, row_key, col_key, val_key, n_row_headers, n_col_header
      let obj = getUniqueAndCount(arr,"month_abs", "day_abs")
      //console.log(obj);
      monthArr = [];
+     let col = 0;
     for (let x = 0; x < Object.keys(obj).length; x++) {
       let w = obj[Object.keys(obj)[x]].length;
       //console.log(w);
@@ -82,10 +83,16 @@ function createTable(arr, row_key, col_key, val_key, n_row_headers, n_col_header
       let cell = createCell();
       row.appendChild(cell);
       cell.colSpan = w;
+      for (let i = 0; i < w; i++) {
+        col++;
+        cell.classList.add('col_' + col);
+      }
+      cell.style.border = '1px solid #999';
       x_col++;
       cell.classList.add('row_' + y_row);  // SO ROWS START AT 1
       cell.id = 'r' + y_row + 'c' + x_col;
       cell.style.border = '1px solid #999';
+      cell.classList.add('month_abs_' + month_abs);
       cell.appendChild(createInner(month_no));
     }
 
@@ -94,26 +101,35 @@ function createTable(arr, row_key, col_key, val_key, n_row_headers, n_col_header
     if (y === 1) {
      let obj = getUniqueAndCount(arr,"week_abs", "day_abs")
      weekArr = [];
+     let col = 0;
      for (let x = 0; x < Object.keys(obj).length; x++) {
       let w = obj[Object.keys(obj)[x]].length;
       weekArr.push(w);
       //console.log(w);
-      let month_abs = Object.keys(obj)[x];
-      let month_no = (month_abs-1) % 52 + 1;
+      let week_abs = Object.keys(obj)[x];
+      let week_no = (week_abs-1) % 52 + 1;
       let cell = createCell();
       row.appendChild(cell);
       cell.colSpan = w;
+      
+      for (let i = 0; i < w; i++) {
+        col++;
+        cell.classList.add('col_' + col);
+      }
+      cell.style.border = '1px solid #999';
+      
+      
       x_col++;
       cell.classList.add('row_' + y_row);  // SO ROWS START AT 1
       cell.id = 'r' + y_row + 'c' + x_col;
       cell.style.border = '1px solid #999';
       cell.style.fontFamily = 'monospace';
-      
-      if (month_no < 10) {
-        month_no = '0' + month_no;
+      cell.classList.add('week_abs_' + week_abs);
+      if (week_no < 10) {
+        week_no = '0' + week_no;
       }
       
-      cell.appendChild(createInner(month_no));
+      cell.appendChild(createInner(week_no));
      }
 
     }
@@ -174,7 +190,7 @@ let x_col = 0;
    cell.classList.add('row_' + y_row);
    cell.classList.add('col_' + x_col);
    cell.id = 'r' + y_row + 'c' + x_col;
-      
+   
       
    // CELL OBJECT : THE CELL.ID IS THE CELLS LOCATION IN THE TABLE
    // BUT ITS VALUE WILL COME FROM THE TEMPORARY DATA OBJECT, WHERE DATA IS MAPPED BY row_key AND col_key
@@ -185,8 +201,34 @@ let x_col = 0;
    
    if (val) {
      cell.classList.add('activity_no_' + (cells[cell.id].data[row_key]));
+   } else {
+     //cell.style.backgroundColor = '#fff';
    }
    
+   cell.addEventListener('mouseover', function() {
+     let id = this.id;
+     let col_id = id.split('c')[1];
+     //console.log(col_id);
+     let cols = document.getElementsByClassName('col_' + col_id);
+     for (let i = 0; i < cols.length; i++) {
+       cols[i].classList.add('light-grey'); 
+     }
+     //console.log(cells[cell.id].data.week_abs);
+     //console.log('week_abs_' + cells[cell.id].data.week_abs);
+     //document.getElementsByClassName('week_abs_' + cells[cell.id].data.week_abs)[0].classList.add('light-grey');
+     
+   });
+   cell.addEventListener('mouseleave', function() {
+     let id = this.id;
+     let col_id = id.split('c')[1];
+     //console.log(col_id);
+     let cols = document.getElementsByClassName('col_' + col_id);
+     for (let i = 0; i < cols.length; i++) {
+       cols[i].classList.remove('light-grey'); 
+     }
+     //document.getElementsByClassName('week_abs_' + cells[cell.id].data.week_abs)[0].classList.remove('light-grey');
+   }); 
+     
    // CREATE AND APPEND INNER
    cell.appendChild(createInner(null)); // no value
        
