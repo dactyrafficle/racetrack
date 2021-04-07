@@ -3,7 +3,8 @@ html, body {
 }
 table {
 border-collapse: collapse;
-
+font-family: monospace;
+font-size: 17px;
 }
 tr {
   border: 1px solid #999;
@@ -11,8 +12,8 @@ tr {
 td {
  vertical-align: middle;
  text-align: center;
- 
-
+ background-color: #fff;
+ padding: 1.5px;
 }
 .inner {
   display: inline-block;
@@ -21,6 +22,7 @@ td {
 #page-header {
  text-align: center;
 }
+
 
 
 .activity_no_1 {
@@ -67,7 +69,7 @@ td {
  border-right: 1px solid #999;
  vertical-align: middle;
  text-align: center;
- background-color: white;
+ background-color: #fff;
 }
 .row:nth-child(1) .cell {
  border-top: 1px solid #999;
@@ -91,4 +93,10 @@ td {
   border-top: 0.5vh solid transparent;
   border-bottom: 0.5vh solid transparent;
   border-left: 0.5vh solid #999;
+}
+.light-grey {
+ /*filter: brightness(93%);
+ border-top: 1px solid #999; */
+ background-color: #fdf;
+
 }
